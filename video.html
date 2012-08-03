@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"> 
+	<title>video test</title>
+	<!--link rel="stylesheet" type="text/css" href="" /-->
+  <script type="text/javascript">
+    var commercialNode = "politics";
+  </script>
+  <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/wpni_generic_ad.js"></script>
+  <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/wp_ad.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+  
+  <script type="text/javascript" src="Video.js"></script>
+
+</head>
+<body>
+
+<script type="text/javascript">
+  var vidplayer = new wpAd.Video({
+  'forceHTML5':true,
+  'html5VideoSource': ['test.v2.webm', 'test.mp4', 'test.ogg'],
+  'flashVideoSource': 'http://videoads.washingtonpost.com/test.f4v',
+  'autoplay':false,
+  'mute':false,
+  'width': 700,
+  'height': 390 
+  });
+  
+  $('body').append(vidplayer.flashPlayerCode())
+</script>
+
+</body>
+</html>
