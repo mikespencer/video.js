@@ -2,33 +2,103 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8"> 
-	<title>video test</title>
-	<!--link rel="stylesheet" type="text/css" href="" /-->
-  <script type="text/javascript">
-    var commercialNode = "politics";
-  </script>
-  <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/wpni_generic_ad.js"></script>
-  <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/wp_ad.js"></script>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	<title>Video Demo</title>
   
-  <script type="text/javascript" src="Video.js"></script>
-
+  <style type="text/css">
+    #controls{
+      size:14px;
+      width: 100px;
+      background-color:#efefef;
+      border: 1px solid #666;
+      margin:0;
+      padding:30px;
+      position:fixed;
+      top:10px;
+    }
+    #controls ul{
+      font-family:sans-serif;
+      margin:0;
+      padding:0;
+    }
+    #controls li{
+      list-style:none;
+      line-height:24px;
+    }
+  </style>
+  
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  
 </head>
+
 <body>
 
-<script type="text/javascript">
-  var vidplayer = new wpAd.Video({
-  'forceHTML5':true,
-  'html5VideoSource': ['test.v2.webm', 'test.mp4', 'test.ogg'],
-  'flashVideoSource': 'http://videoads.washingtonpost.com/test.f4v',
-  'autoplay':false,
-  'mute':false,
-  'width': 700,
-  'height': 390 
-  });
+  <div id="target">
+    <!-- Video player will be loaded here -->
+  </div>
   
-  $('body').append(vidplayer.flashPlayerCode())
-</script>
+  <!-- Demo JavaScript controls -->
+  <div id="controls">
+    <h3 style="margin:0;padding:0">Controls</h3>
+    <ul>
+      <li>
+        <a rel="play" href="#"></a>
+      </li>
+      <li>
+        <a rel="pause" href="#"></a>
+      </li>
+      <li>
+        <a rel="stop" href="#"></a>
+      </li>
+      <li>
+        <a rel="mute" href="#"></a>
+      </li>
+      <li>
+        <a rel="unmute" href="#"></a>
+      </li>
+    </ul>
+  </div>
+
+  <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video.js"></script>
+  <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video_interaction.js"></script>
+  
+  <script type="text/javascript">
+    var vidplayer = new wpAd.Video({
+      'preferHTML5': false,
+      'source': ['http://videoads.washingtonpost.com/test.f4v', 
+        'http://videoads.washingtonpost.com/attVideo_theRoot.webm',
+        'http://videoads.washingtonpost.com/horsepower_15_min.ogg',
+        'http://videoads.washingtonpost.com/attVideo_theRoot.mp4'
+      ],
+      'autoplay': false,
+      'mute': false,
+      'poster': 'http://media.washingtonpost.com/wp-adv/advertisers/smartwater/2011/poster.jpg',
+      'preload': false,
+      'width': 700,
+      'height': 390
+    });
+
+    if($.browser.msie){
+      //looks like no async loading with ExternalInterface functionality for IE...
+      document.write(vidplayer.toString());
+    } else {
+      vidplayer.appendTo('#target');
+    }
+
+    $('#controls').css({
+      'left':vidplayer.settings.width + 20 + 'px'
+    }).find('a').each(function(){
+      $(this).bind('click', function(e){
+        e.preventDefault();
+        vidplayer[this.rel]();
+      }).html('&raquo; ' + this.rel)
+    });
+    
+    //demo track video plays
+    //important to wait for window.load or any other method to ensure the .swf has loaded
+    $(window).load(function(){
+      vidplayer.bind('play', 'vidplayer.addPixel', 'play_impression_pixel');
+    })
+  </script>
 
 </body>
 </html>
