@@ -22,6 +22,7 @@ This file adds support for the following methods:
 ######mute
 ######unmute
 
+#HOW TO USE:
 Takes a single argument (Object) with the following possible keys and default values:
 
     :::javascript
@@ -145,7 +146,7 @@ set to true to use the provided height for the player. Set to false to use a dyn
 
 
 
-#JavaScript Methods
+#JAVASCRIPT METHODS:
 
 ##appendTo
 ######Argument: 
@@ -281,7 +282,7 @@ EG:
     
     
     
-#Adding to the page:
+#ADDING TO THE PAGE:
 Use the appendTo method
 
     :::javascript
@@ -294,7 +295,7 @@ Use the appendTo method
 
 
 
-#Example
+#IN DEPTH EXAMPLE:
       :::html
       <!DOCTYPE html>
       <html lang="en">
