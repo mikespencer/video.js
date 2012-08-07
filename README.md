@@ -120,10 +120,10 @@ set to true to use the provided height for the player. Set to false to use a dyn
 #JavaScript Methods
 
 ##appendTo
-###Argument: 
+######Argument: 
 1. jQuery selector (String), DOM object, or jQuery Object (required) *REQUIRED
 
-###Description
+######Description
 Adds the video to the specified element
 EG:
       :::javascript
@@ -131,9 +131,9 @@ EG:
 
     
 ##flashplayer()
-###0 Arguments
+######0 Arguments
     
-###Description
+######Description
 Returns the the flash video player object
 EG:
       :::javascript
@@ -141,9 +141,9 @@ EG:
 
     
 ##toString
-###0 Arguments
+######0 Arguments
     
-###Description
+######Description
 Returns the the flash player embed code as a String (needed to document.write the player in IE)
 EG:
       :::javascript
@@ -151,10 +151,10 @@ EG:
 
     
 ##addPixel
-###Argument:
+######Argument:
 1. URL of tracking pixel (String) *REQUIRED
 
-###Description
+######Description
 Render a tracking pixel that is appended to the body of the page
 EG:
       :::javascript
@@ -162,12 +162,12 @@ EG:
 
 
 ##bind
-###Arguments:
+######Arguments:
 1. The event to bind to: play, pause, stop, mute, unmute, scrub, all (String). *REQUIRED
 2. The JavaScript function to call (String). *REQUIRED
 3. Optional parameter to pass back to the js function (STRING) *OPTIONAL
 
-###Description
+######Description
 Bind a JavaScript funciton to an event. Similar to jQuery's bind method.
 EG:
       :::javascript
@@ -175,10 +175,10 @@ EG:
 
     
 ##unbind
-###Arguments:
+######Arguments:
 1. Event. If omitted, all events/js functions are unbound (String) *OPTIONAL
 
-###Description
+######Description
 Unbind JavaScript functions from an event. If argument is omitted, all events/js functions are unbound
 EG:
       :::javascript
@@ -186,10 +186,10 @@ EG:
     
 
 ##switchVideo
-###Arguments:
+######Arguments:
 1. Video Source (String) *REQUIRED
 
-###Description
+######Description
 Switch the source of the video
 EG:
       :::javascript
@@ -197,10 +197,10 @@ EG:
 
     
 ##attr
-###Arguments:
+######Arguments:
 1. The attribute of the Flash player to get (String) OR an Object of mapped attributes to set (Object). *OPTIONAL
 
-###Description
+######Description
 Get or set Flash video player attributes. If argument is omitted, return all attributes as an Object.
 EG:
       :::javascript
