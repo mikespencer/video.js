@@ -133,8 +133,9 @@ set to true to use the provided height for the player. Set to false to use a dyn
 ######Description
 Adds the video to the specified element
 EG:
-      :::javascript
-      myVideo.appendTo('#target');
+
+    :::javascript
+    myVideo.appendTo('#target');
 
     
 ##flashplayer()
@@ -143,8 +144,9 @@ EG:
 ######Description
 Returns the the flash video player object
 EG:
-      :::javascript
-      myVideo.flashplayer();
+
+    :::javascript
+    myVideo.flashplayer();
 
     
 ##toString
@@ -153,8 +155,9 @@ EG:
 ######Description
 Returns the the flash player embed code as a String (needed to document.write the player in IE)
 EG:
-      :::javascript
-      myVideo.toString();
+
+    :::javascript
+    myVideo.toString();
 
     
 ##addPixel
@@ -164,8 +167,9 @@ EG:
 ######Description
 Render a tracking pixel that is appended to the body of the page
 EG:
-      :::javascript
-      myVideo.addPixel('trackingPixelURL');
+
+    :::javascript
+    myVideo.addPixel('trackingPixelURL');
 
 
 ##bind
@@ -177,8 +181,9 @@ EG:
 ######Description
 Bind a JavaScript funciton to an event. Similar to jQuery's bind method.
 EG:
-      :::javascript
-      myVideo.bind('play', 'console.log', 'play clicked');
+
+    :::javascript
+    myVideo.bind('play', 'console.log', 'play clicked');
 
     
 ##unbind
@@ -188,8 +193,9 @@ EG:
 ######Description
 Unbind JavaScript functions from an event. If argument is omitted, all events/js functions are unbound
 EG:
-      :::javascript
-      myVideo.unbind('play');
+
+    :::javascript
+    myVideo.unbind('play');
     
 
 ##switchVideo
@@ -199,8 +205,9 @@ EG:
 ######Description
 Switch the source of the video
 EG:
-      :::javascript
-      myVideo.switchVideo('newVideoSource.swf');
+
+    :::javascript
+    myVideo.switchVideo('newVideoSource.swf');
 
     
 ##attr
@@ -210,36 +217,42 @@ EG:
 ######Description
 Get or set Flash video player attributes. If argument is omitted, return all attributes as an Object.
 EG:
-      :::javascript
-      //returns all attributes as an Object
-      myVideo.attr();
-      
-      //get the source of the video
-      myVideo.attr('source');
-      
-      //set the source of the video
-      myVideo.attr({source: 'newSource.flv'});
-      
+
+    :::javascript
+    //returns all attributes as an Object
+    myVideo.attr();
+
+    //get the source of the video
+    myVideo.attr('source');
+
+    //set the source of the video
+    myVideo.attr({source: 'newSource.flv'});
+
 
 ##play
-      :::javascript
-      myVideo.play();
+
+    :::javascript
+    myVideo.play();
     
 ##pause
-      :::javascript
-      myVideo.pause();
+
+    :::javascript
+    myVideo.pause();
     
 ##stop
-      :::javascript
-      myVideo.stop();
+
+    :::javascript
+    myVideo.stop();
 
 ##mute
-      :::javascript
-      myVideo.mute();
+
+    :::javascript
+    myVideo.mute();
 
 ##unmute
-      :::javascript
-      myVideo.unmute();
+
+    :::javascript
+    myVideo.unmute();
     
 
     
@@ -249,13 +262,14 @@ EG:
     
 #Adding to the page:
 Use the appendTo method
-      :::javascript
-      if($.browser.msie){
-        //looks like no async loading with ExternalInterface functionality for IE...
-        document.write(vidplayer.toString());
-      } else {
-        vidplayer.appendTo('#target');
-      }
+
+    :::javascript
+    if($.browser.msie){
+      //looks like no async loading with ExternalInterface functionality for IE...
+      document.write(vidplayer.toString());
+    } else {
+      vidplayer.appendTo('#target');
+    }
 
 
 
