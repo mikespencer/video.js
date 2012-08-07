@@ -31,75 +31,75 @@
     myPlayer.appendTo('#target');
     
 ##source 
-###The source of the video *REQUIRED
-###Array or String
-###Default: []
+The source of the video *REQUIRED
+Array or String
+Default: []
 An array of possible video source URL's, for both Flash and HTML5 videos. A String can be used for a single video source.
 
 ##width
-###The width of the video
-###Number
-###Default: 320
+The width of the video
+Number
+Default: 320
 The width of the video (pixels).
 
 ##height
-###The height of the video
-###Number
-###Default: 240
+The height of the video
+Number
+Default: 240
 The height of the video (pixels).
 
 ##mute
-###Indicates whether the video should start muted
-###Boolean
-###Default: true
+Indicates whether the video should start muted
+Boolean
+Default: true
 Setting this value to true mutes the video. Setting this value to false unmutes the video.
 
 ##autoplay
-###Indicates whether the video should autoplay on page load
-###Boolean
-###Default: true
+Indicates whether the video should autoplay on page load
+Boolean
+Default: true
 Setting this value to true autoplays the video. Setting this value to false does not autoplays the video.
 
 ##poster
-###Indicates whether the video should start muted
-###String
-###Default: false
+Indicates whether the video should start muted
+String
+Default: false
 URL of the poster image for the video. For no poster, use the boolean false or omit (uses default value of false).
 
 ##preferHTML5
-###Attempt to use HTML5 video over Flash
-###Boolean
-###Default: false
+Attempt to use HTML5 video over Flash
+Boolean
+Default: false
 Setting this to true will attempt to use HTML5 video over Flash. If the browser supports HTML5 video and is able to play at least one of the sources passed in, then an HTML5 video player will be used. Otherwise, it will default to a Flash player. Setting this to false (default) will always attempt to render a Flash player first and will then fall back on an HTML5 player if the browser doesn't support flash (ie: IOS), but does support HTML5 video and at least one of the video sources that are passed in.
 
 ##customFlashVars
-###custom flashvars for Flash video player
-###String
-###Default: '' (Empty String)
+custom flashvars for Flash video player
+String
+Default: '' (Empty String)
 Custom additional flashvars to be passed in to the flash player. Multiple flashvars should be seperated by & (eg: 'clicktag=http://www.example.com&controls_alpha=0.5').
 
 ##backgroundColor
-###background colour of the player
-###String
-###Default: '#000000'
+background colour of the player
+String
+Default: '#000000'
 Hex value for background colour for the video player (as a String).
 
 ##flashVideoPlayer
-###URL of Flash video player
-###String
-###Default: 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.swf'
+URL of Flash video player
+String
+Default: 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.swf'
 URL to the Flash video player.
 
 ##rndm
-###Number to appended to the ID of the video player
-###Number
-###Default: false
+Number to appended to the ID of the video player
+Number
+Default: false
 Override the random number assigned to the ID of the video player. Could be useful for applying specific styles or for targetting with JavaScript. Default ID will be 'video[random 3 digit number]' (eg: video538), or for IE it will be 'videoie[random 3 digit number]' (eg: videoie538). If you pass in a value here, the ID will become 'video[the value you pass in]' or 'videoie[the value you pass in]'. Set to false to generate a random number, or simply omit.
 
 ##html5PlayerSettings
-###Specific settings for HTML5 player
-###Object {key: boolean}
-###Default:
+Specific settings for HTML5 player
+Object {key: boolean}
+Default:
     :::javascript
     {
       'controls': true,
@@ -126,8 +126,8 @@ set to true to use the provided height for the player. Set to false to use a dyn
 ###Description
 Adds the video to the specified element
 EG:
-    :::javascript
-    myVideo.appendTo('#target');
+      :::javascript
+      myVideo.appendTo('#target');
 
     
 ###flashplayer()
@@ -136,8 +136,8 @@ EG:
 ###Description
 Returns the the flash video player object
 EG:
-    :::javascript
-    myVideo.flashplayer();
+      :::javascript
+      myVideo.flashplayer();
 
     
 ##toString
@@ -146,8 +146,8 @@ EG:
 ###Description
 Returns the the flash player embed code as a String (needed to document.write the player in IE)
 EG:
-    :::javascript
-    myVideo.toString();
+      :::javascript
+      myVideo.toString();
 
     
 ##addPixel
@@ -157,8 +157,8 @@ EG:
 ###Description
 Render a tracking pixel that is appended to the body of the page
 EG:
-    :::javascript
-    myVideo.addPixel('trackingPixelURL');
+      :::javascript
+      myVideo.addPixel('trackingPixelURL');
 
 
 ##bind
@@ -170,8 +170,8 @@ EG:
 ###Description
 Bind a JavaScript funciton to an event. Similar to jQuery's bind method.
 EG:
-    :::javascript
-    myVideo.bind('play', 'console.log', 'play clicked');
+      :::javascript
+      myVideo.bind('play', 'console.log', 'play clicked');
 
     
 ##unbind
@@ -181,8 +181,8 @@ EG:
 ###Description
 Unbind JavaScript functions from an event. If argument is omitted, all events/js functions are unbound
 EG:
-    :::javascript
-    myVideo.unbind('play');
+      :::javascript
+      myVideo.unbind('play');
     
 
 ##switchVideo
@@ -192,8 +192,8 @@ EG:
 ###Description
 Switch the source of the video
 EG:
-    :::javascript
-    myVideo.switchVideo('newVideoSource.swf');
+      :::javascript
+      myVideo.switchVideo('newVideoSource.swf');
 
     
 ##attr
@@ -203,151 +203,156 @@ EG:
 ###Description
 Get or set Flash video player attributes. If argument is omitted, return all attributes as an Object.
 EG:
-    :::javascript
-    //returns all attributes as an Object
-    myVideo.attr();
-    
-    //get the source of the video
-    myVideo.attr('source');
-    
-    //set the source of the video
-    myVideo.attr({source: 'newSource.flv'});
-    
+      :::javascript
+      //returns all attributes as an Object
+      myVideo.attr();
+      
+      //get the source of the video
+      myVideo.attr('source');
+      
+      //set the source of the video
+      myVideo.attr({source: 'newSource.flv'});
+      
 
 ##play
-    myVideo.play();
+      :::javascript
+      myVideo.play();
     
 ##pause
-    myVideo.pause();
+      :::javascript
+      myVideo.pause();
     
 ##stop
-    myVideo.stop();
+      :::javascript
+      myVideo.stop();
 
 ##mute
-    myVideo.mute();
+      :::javascript
+      myVideo.mute();
 
 ##unmute
-    myVideo.unmute();
+      :::javascript
+      myVideo.unmute();
     
 
 #Adding to the page:
 Use the appendTo method
-
-    if($.browser.msie){
-      //looks like no async loading with ExternalInterface functionality for IE...
-      document.write(vidplayer.toString());
-    } else {
-      vidplayer.appendTo('#target');
-    }
+      :::javascript
+      if($.browser.msie){
+        //looks like no async loading with ExternalInterface functionality for IE...
+        document.write(vidplayer.toString());
+      } else {
+        vidplayer.appendTo('#target');
+      }
 
 
 
 #Example
-    :::html
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="utf-8"> 
-      <title>Video Demo</title>
-      
-      <style type="text/css">
-        #controls{
-          size:14px;
-          width: 100px;
-          background-color:#efefef;
-          border: 1px solid #666;
-          margin:0;
-          padding:30px;
-          position:fixed;
-          top:10px;
-        }
-        #controls ul{
-          font-family:sans-serif;
-          margin:0;
-          padding:0;
-        }
-        #controls li{
-          list-style:none;
-          line-height:24px;
-        }
-      </style>
-      
-      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-      
-    </head>
-
-    <body>
-
-      <div id="target">
-        <!-- Video player will be loaded here -->
-      </div>
-      
-      <!-- Demo: JavaScript controls -->
-      <div id="controls">
-        <h3 style="margin:0;padding:0">Controls</h3>
-        <ul>
-          <li>
-            <a rel="play" href="#"></a>
-          </li>
-          <li>
-            <a rel="pause" href="#"></a>
-          </li>
-          <li>
-            <a rel="stop" href="#"></a>
-          </li>
-          <li>
-            <a rel="mute" href="#"></a>
-          </li>
-          <li>
-            <a rel="unmute" href="#"></a>
-          </li>
-        </ul>
-      </div>
-
-      <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video.js"></script>
-      <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video_interaction.js"></script>
-      
-      <script type="text/javascript">
-        var vidplayer = new wpAd.Video({
-          'preferHTML5': false,
-          'source': ['http://videoads.washingtonpost.com/test.f4v', 
-            'http://videoads.washingtonpost.com/attVideo_theRoot.webm',
-            'http://videoads.washingtonpost.com/horsepower_15_min.ogg',
-            'http://videoads.washingtonpost.com/attVideo_theRoot.mp4'
-          ],
-          'autoplay': false,
-          'mute': false,
-          'poster': 'http://media.washingtonpost.com/wp-adv/advertisers/smartwater/2011/poster.jpg',
-          'preload': false,
-          'width': 700,
-          'height': 390
-        });
-
-        if($.browser.msie){
-          //looks like no async loading with ExternalInterface functionality for IE...
-          document.write(vidplayer.toString());
-        } else {
-          vidplayer.appendTo('#target');
-        }
-
-        $('#controls').css({
-          'left':vidplayer.settings.width + 20 + 'px'
-        }).find('a').each(function(){
-          $(this).bind('click', function(e){
-            e.preventDefault();
-            vidplayer[this.rel]();
-          }).html('&raquo; ' + this.rel)
-        });
+      :::html
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="utf-8"> 
+        <title>Video Demo</title>
         
-        //Demo: track video plays
-        //important to wait for window.load or any other method to ensure the .swf has loaded
-        $(window).load(function(){
-          vidplayer.bind('play', 'vidplayer.addPixel', 'play_impression_pixel');
-        })
-      </script>
+        <style type="text/css">
+          #controls{
+            size:14px;
+            width: 100px;
+            background-color:#efefef;
+            border: 1px solid #666;
+            margin:0;
+            padding:30px;
+            position:fixed;
+            top:10px;
+          }
+          #controls ul{
+            font-family:sans-serif;
+            margin:0;
+            padding:0;
+          }
+          #controls li{
+            list-style:none;
+            line-height:24px;
+          }
+        </style>
+        
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        
+      </head>
 
-    </body>
-    </html>
+      <body>
+
+        <div id="target">
+          <!-- Video player will be loaded here -->
+        </div>
+        
+        <!-- Demo: JavaScript controls -->
+        <div id="controls">
+          <h3 style="margin:0;padding:0">Controls</h3>
+          <ul>
+            <li>
+              <a rel="play" href="#"></a>
+            </li>
+            <li>
+              <a rel="pause" href="#"></a>
+            </li>
+            <li>
+              <a rel="stop" href="#"></a>
+            </li>
+            <li>
+              <a rel="mute" href="#"></a>
+            </li>
+            <li>
+              <a rel="unmute" href="#"></a>
+            </li>
+          </ul>
+        </div>
+
+        <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video.js"></script>
+        <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video_interaction.js"></script>
+        
+        <script type="text/javascript">
+          var vidplayer = new wpAd.Video({
+            'preferHTML5': false,
+            'source': ['http://videoads.washingtonpost.com/test.f4v', 
+              'http://videoads.washingtonpost.com/attVideo_theRoot.webm',
+              'http://videoads.washingtonpost.com/horsepower_15_min.ogg',
+              'http://videoads.washingtonpost.com/attVideo_theRoot.mp4'
+            ],
+            'autoplay': false,
+            'mute': false,
+            'poster': 'http://media.washingtonpost.com/wp-adv/advertisers/smartwater/2011/poster.jpg',
+            'preload': false,
+            'width': 700,
+            'height': 390
+          });
+
+          if($.browser.msie){
+            //looks like no async loading with ExternalInterface functionality for IE...
+            document.write(vidplayer.toString());
+          } else {
+            vidplayer.appendTo('#target');
+          }
+
+          $('#controls').css({
+            'left':vidplayer.settings.width + 20 + 'px'
+          }).find('a').each(function(){
+            $(this).bind('click', function(e){
+              e.preventDefault();
+              vidplayer[this.rel]();
+            }).html('&raquo; ' + this.rel)
+          });
+          
+          //Demo: track video plays
+          //important to wait for window.load or any other method to ensure the .swf has loaded
+          $(window).load(function(){
+            vidplayer.bind('play', 'vidplayer.addPixel', 'play_impression_pixel');
+          })
+        </script>
+
+      </body>
+      </html>
     
 
 ##Last updated by Mike Spencer 08/07/12
