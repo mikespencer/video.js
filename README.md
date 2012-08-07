@@ -1,7 +1,28 @@
-
 #wpAd.Video
 
-  Takes a single argument (Object) with the following possible keys and default values:
+jQuery is required. Add the following script to the page:
+
+    :::html
+    <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video.js"></script>
+    
+For more interaction options with the player, add this script below the video.js script:
+
+    :::html
+    <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video_interaction.js"></script>
+
+This file adds support for the following methods:
+######addPixel
+######attr
+######bind
+######unbind
+######switchVideo
+######play
+######pause
+######stop
+######mute
+######unmute
+
+Takes a single argument (Object) with the following possible keys and default values:
 
     :::javascript
     {
