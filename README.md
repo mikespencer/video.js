@@ -31,69 +31,69 @@
     myPlayer.appendTo('#target');
     
 ##source 
-####The source of the video *REQUIRED
-####Array or String
-####Default: []
+######The source of the video *REQUIRED
+######Array or String
+######Default: []
 An array of possible video source URL's, for both Flash and HTML5 videos. A String can be used for a single video source.
 
 ##width
-####The width of the video
-####Number
-####Default: 320
+######The width of the video
+######Number
+######Default: 320
 The width of the video (pixels).
 
 ##height
-####The height of the video
-####Number
-####Default: 240
+######The height of the video
+######Number
+######Default: 240
 The height of the video (pixels).
 
 ##mute
-####Indicates whether the video should start muted
-####Boolean
-####Default: true
+######Indicates whether the video should start muted
+######Boolean
+######Default: true
 Setting this value to true mutes the video. Setting this value to false unmutes the video.
 
 ##autoplay
-####Indicates whether the video should autoplay on page load
-####Boolean
-####Default: true
+######Indicates whether the video should autoplay on page load
+######Boolean
+######Default: true
 Setting this value to true autoplays the video. Setting this value to false does not autoplays the video.
 
 ##poster
-####Indicates whether the video should start muted
-####String
-####Default: false
+######Indicates whether the video should start muted
+######String
+######Default: false
 URL of the poster image for the video. For no poster, use the boolean false or omit (uses default value of false).
 
 ##preferHTML5
-####Attempt to use HTML5 video over Flash
-####Boolean
-####Default: false
+######Attempt to use HTML5 video over Flash
+######Boolean
+######Default: false
 Setting this to true will attempt to use HTML5 video over Flash. If the browser supports HTML5 video and is able to play at least one of the sources passed in, then an HTML5 video player will be used. Otherwise, it will default to a Flash player. Setting this to false (default) will always attempt to render a Flash player first and will then fall back on an HTML5 player if the browser doesn't support flash (ie: IOS), but does support HTML5 video and at least one of the video sources that are passed in.
 
 ##customFlashVars
-####custom flashvars for Flash video player
-####String
-####Default: '' (Empty String)
+######custom flashvars for Flash video player
+######String
+######Default: '' (Empty String)
 Custom additional flashvars to be passed in to the flash player. Multiple flashvars should be seperated by & (eg: 'clicktag=http://www.example.com&controls_alpha=0.5').
 
 ##backgroundColor
-####background colour of the player
-####String
-####Default: '#000000'
+######background colour of the player
+######String
+######Default: '#000000'
 Hex value for background colour for the video player (as a String).
 
 ##flashVideoPlayer
-####URL of Flash video player
-####String
-####Default: 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.swf'
+######URL of Flash video player
+######String
+######Default: 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.swf'
 URL to the Flash video player.
 
 ##rndm
-####Number to appended to the ID of the video player
-####Number
-####Default: false
+######Number to appended to the ID of the video player
+######Number
+######Default: false
 Override the random number assigned to the ID of the video player. Could be useful for applying specific styles or for targetting with JavaScript. Default ID will be 'video[random 3 digit number]' (eg: video538), or for IE it will be 'videoie[random 3 digit number]' (eg: videoie538). If you pass in a value here, the ID will become 'video[the value you pass in]' or 'videoie[the value you pass in]'. Set to false to generate a random number, or simply omit.
 
 ##html5PlayerSettings
@@ -107,13 +107,13 @@ Default:
       'setHeight': false
     }
       
-####controls
+######controls
 set to true to show controls. Set to false to hide controls.
   
-####loop
+######loop
 set to true to loop the video. Set to false to not loop the video.
   
-####setHeight
+######setHeight
 set to true to use the provided height for the player. Set to false to use a dynamic flexible height based on the width of the player and the video's aspect ratio
 
 
