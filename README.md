@@ -101,12 +101,13 @@ Override the random number assigned to the ID of the video player. Could be usef
 Specific settings for HTML5 player
 Object {key: boolean}
 Default:
-    :::javascript
-    {
-      'controls': true,
-      'loop': false,
-      'setHeight': false
-    }
+
+      :::javascript
+      {
+        'controls': true,
+        'loop': false,
+        'setHeight': false
+      }
       
 ######controls
 set to true to show controls. Set to false to hide controls.
