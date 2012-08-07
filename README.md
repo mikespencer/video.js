@@ -23,6 +23,13 @@
       }
     }
 
+##Example of creating a new player
+    :::javascript
+    var myPlayer = new wpAd.Video({ /*any options listed above go here*/ });
+    
+    //add the video player to a div with an id of 'target':
+    myPlayer.appendTo('#target');
+    
 ##source 
 ###The source of the video *REQUIRED
 ####Array or String
@@ -108,6 +115,131 @@ set to true to loop the video. Set to false to not loop the video.
   
 ######setHeight
 set to true to use the provided height for the player. Set to false to use a dynamic flexible height based on the width of the player and the video's aspect ratio
+
+
+#JavaScript Methods
+
+##appendTo
+####Argument: 
+1. jQuery selector (String), DOM object, or jQuery Object (required) *REQUIRED
+
+####Description
+Adds the video to the specified element
+EG:
+    :::javascript
+    myVideo.appendTo('#target');
+
+    
+####flashplayer()
+####0 Arguments
+    
+####Description
+Returns the the flash video player object
+EG:
+    :::javascript
+    myVideo.flashplayer();
+
+    
+##toString
+####0 Arguments
+    
+####Description
+Returns the the flash player embed code as a String (needed to document.write the player in IE)
+EG:
+    :::javascript
+    myVideo.toString();
+
+    
+##addPixel
+####Argument:
+1. URL of tracking pixel (String) *REQUIRED
+
+####Description
+Render a tracking pixel that is appended to the body of the page
+EG:
+    :::javascript
+    myVideo.addPixel('trackingPixelURL');
+
+
+##bind
+####Arguments:
+1. The event to bind to: play, pause, stop, mute, unmute, scrub, all (String). *REQUIRED
+2. The JavaScript function to call (String). *REQUIRED
+3. Optional parameter to pass back to the js function (STRING) *OPTIONAL
+
+####Description
+Bind a JavaScript funciton to an event. Similar to jQuery's bind method.
+EG:
+    :::javascript
+    myVideo.bind('play', 'console.log', 'play clicked');
+
+    
+##unbind
+####Arguments:
+1. Event. If omitted, all events/js functions are unbound (String) *OPTIONAL
+
+####Description
+Unbind JavaScript functions from an event. If argument is omitted, all events/js functions are unbound
+EG:
+    :::javascript
+    myVideo.unbind('play');
+    
+
+##switchVideo
+####Arguments:
+1. Video Source (String) *REQUIRED
+
+####Description
+Switch the source of the video
+EG:
+    :::javascript
+    myVideo.switchVideo('newVideoSource.swf');
+
+    
+##attr
+####Arguments:
+1. The attribute of the Flash player to get (String) OR an Object of mapped attributes to set (Object). *OPTIONAL
+
+####Description
+Get or set Flash video player attributes. If argument is omitted, return all attributes as an Object.
+EG:
+    :::javascript
+    //returns all attributes as an Object
+    myVideo.attr();
+    
+    //get the source of the video
+    myVideo.attr('source');
+    
+    //set the source of the video
+    myVideo.attr({source: 'newSource.flv'});
+    
+
+##play
+    myVideo.play();
+    
+##pause
+    myVideo.pause();
+    
+##stop
+    myVideo.stop();
+
+##mute
+    myVideo.mute();
+
+##unmute
+    myVideo.unmute();
+    
+
+#Adding to the page:
+Use the appendTo method
+
+    if($.browser.msie){
+      //looks like no async loading with ExternalInterface functionality for IE...
+      document.write(vidplayer.toString());
+    } else {
+      vidplayer.appendTo('#target');
+    }
+
 
 
 #Example
