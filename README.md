@@ -1,3 +1,4 @@
+
 #wpAd.Video
 
   Takes a single argument (Object) with the following possible keys and default values:
@@ -115,6 +116,11 @@ set to true to loop the video. Set to false to not loop the video.
   
 ######setHeight
 set to true to use the provided height for the player. Set to false to use a dynamic flexible height based on the width of the player and the video's aspect ratio
+
+
+
+
+
 
 
 #JavaScript Methods
@@ -235,6 +241,11 @@ EG:
       myVideo.unmute();
     
 
+    
+    
+    
+    
+    
 #Adding to the page:
 Use the appendTo method
       :::javascript
