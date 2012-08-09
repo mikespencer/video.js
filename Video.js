@@ -71,7 +71,7 @@ var wpAd = window.wpAd || {};
         this.canPlay[k] = v.canPlayType && v.canPlayType(codecs[k]) === "probably" ? true : false;
       }
     }
-	};
+  };
 
   Video.prototype.getFlashVideo = function(){
     if(this.canPlay.flash){
