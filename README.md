@@ -30,6 +30,7 @@ Takes a single argument (Object) with the following possible keys and default va
       'source': [], //REQUIRED
       'width': 320,
       'height': 240,
+      'clickTag': '',
       'mute': true,
       'autoplay': true,
       'poster': false,
@@ -37,8 +38,10 @@ Takes a single argument (Object) with the following possible keys and default va
       'preferHTML5': false,
       'customFlashVars': '',
       'backgroundColor': '#000000',
-      'flashVideoPlayer': 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.swf',
-      'rndm': false,
+      'version': 1,
+      'flashVideoPlayer': 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.v1.swf',
+      'id': false,
+      'pixels': false,
       'html5PlayerSettings' : {
         'controls': true,
         'loop': false,
@@ -70,6 +73,12 @@ The width of the video (pixels).
 ######Type: Number
 ######Default: 240
 The height of the video (pixels).
+
+##clickTag
+######Clickthru URL
+######Type: String
+######Default: ''
+URL of the page that will open  if a user clicks on the FLASH video player (no HTML5 player support, at this time).
 
 ##mute
 ######Indicates whether the video should start muted
@@ -107,13 +116,19 @@ Custom additional flashvars to be passed in to the flash player. Multiple flashv
 ######Default: '#000000'
 Hex value for background colour for the video player (as a String).
 
+##version
+######Version of Flash video player
+######Type: Number
+######Default: 1
+replaces v1 in default flashVideoPlayer value with specified version. EG: A value of 2 would use video player: http://media.washingtonpost.com/wp-srv/ad/VidPlayer.v2.swf
+
 ##flashVideoPlayer
 ######URL of Flash video player
 ######Type: String
-######Default: 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.swf'
+######Default: 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.v1.swf'
 URL to the Flash video player.
 
-##rndm
+##id
 ######Number to appended to the ID of the video player
 ######Type: Number
 ######Default: false
@@ -140,10 +155,26 @@ set to true to loop the video. Set to false to not loop the video.
 ######setHeight
 set to true to use the provided height for the player. Set to false to use a dynamic flexible height based on the width of the player and the video's aspect ratio
 
+##pixels
+######Tracking pixels for tracking video events
+######Type: Object {key: 'pixel_url'}/Booelan false for no tracking
+######Default: false (no tracking)
 
+      :::javascript
+      {
+        'play': 'url',
+        'pause': 'url',
+        'stop': 'url',
+        'mute': 'url',
+        'unmute': 'url',
+        'all': 'url' 
+      }
 
+######play, pause, stop, mute, unmute, scrub:
+Should be self explanitory. Render corresponding pixel when the event happens
 
-
+######all
+Uses this pixel for all events: play, pause, stop, mute, unmute, scrub
 
 
 #JAVASCRIPT METHODS:
@@ -222,16 +253,16 @@ EG:
 
 ##switchVideo
 ######Arguments:
-1. Video Source (String) *REQUIRED
+1. Video Source (Array of possible sources, or a single source as a String) *REQUIRED
 
 ######Description
 Switch the source of the video
 EG:
 
     :::javascript
-    myVideo.switchVideo('newVideoSource.swf');
+    myVideo.switchVideo(['somevideo.flv', 'somevideo.webm', 'somevideo.ogg', 'somevideo.mp4']);
 
-    
+
 ##attr
 ######Arguments:
 1. The attribute of the Flash player to get (String) OR an Object of mapped attributes to set (Object). *OPTIONAL
@@ -335,7 +366,7 @@ Use the appendTo method
           <!-- Video player will be loaded here -->
         </div>
         
-        <!-- Demo: JavaScript controls -->
+        <!-- Demo JavaScript controls -->
         <div id="controls">
           <h3 style="margin:0;padding:0">Controls</h3>
           <ul>
@@ -357,20 +388,29 @@ Use the appendTo method
           </ul>
         </div>
 
-        <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video.js"></script>
-        <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video_interaction.js"></script>
+        <!--script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video.js"></script>
+        <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video_interaction.js"></script-->
+        <script type="text/javascript" src="video.js"></script>
+        <script type="text/javascript" src="video_interaction.js"></script>
         
         <script type="text/javascript">
           var vidplayer = new wpAd.Video({
             'preferHTML5': false,
-            'source': ['http://videoads.washingtonpost.com/test.f4v', 
+            'source': [
+              'http://videoads.washingtonpost.com/test.f4v', 
               'http://videoads.washingtonpost.com/attVideo_theRoot.webm',
               'http://videoads.washingtonpost.com/horsepower_15_min.ogg',
               'http://videoads.washingtonpost.com/attVideo_theRoot.mp4'
             ],
             'autoplay': false,
             'mute': false,
-            'poster': 'http://media.washingtonpost.com/wp-adv/advertisers/smartwater/2011/poster.jpg',
+            'pixels': {
+              'play': 'play_pixel_url',
+              'pause': 'pause_pixel_url',
+              'play': 'stop_pixel_url'
+            },
+            'poster': 'http://img.wpdigital.net/wp-adv/advertisers/smartwater/2011/poster.jpg',
+            'flashVideoPlayer': 'VidPlayer.v1.swf',
             'preload': false,
             'width': 700,
             'height': 390
@@ -391,16 +431,10 @@ Use the appendTo method
               vidplayer[this.rel]();
             }).html('&raquo; ' + this.rel)
           });
-          
-          //Demo: track video plays
-          //important to wait for window.load or any other method to ensure the .swf has loaded
-          $(window).load(function(){
-            vidplayer.bind('play', 'vidplayer.addPixel', 'play_impression_pixel');
-          })
+
         </script>
 
       </body>
-      </html>
-    
+      </html>    
 
-##Last updated by Mike Spencer 08/07/12
+##Last updated by Mike Spencer 08/13/12

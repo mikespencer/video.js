@@ -5,6 +5,10 @@ var wpAd = window.wpAd || {};
 (function(w, d, $, wpAd){
 
   'use strict';
+  
+  console.profile('t');
+  
+  var _this;
 
   function Video(atts) {
 
@@ -22,11 +26,14 @@ var wpAd = window.wpAd || {};
       'poster': false,
       'preload': false,
       'preferHTML5': false,
+      'clickTag': '',
       'customFlashVars': '',
       'backgroundColor': '#000000',
-      'flashVideoPlayer': 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.swf',
-      'rndm': false,
-      'html5PlayerSettings' : {
+      'version': 1,
+      'flashVideoPlayer': 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.v1.swf',
+      'id': false,
+      'pixels': false,
+      'html5PlayerSettings': {
         'controls': true,
         'loop': false,
         'setHeight': false
@@ -37,9 +44,12 @@ var wpAd = window.wpAd || {};
       this.settings.source = [this.settings.source];
     }
     
+    if(this.settings.version > 1){
+      this.settings.flashVideoPlayer = this.settings.flashVideoPlayer.replace('v1', 'v' + this.settings.version);
+    }
+
     this.num_sources = this.settings.source.length;
-    this.rndm = this.settings.rndm || Math.floor(Math.random()*1E3);
-    //this.rndm = '';
+    this.id = this.settings.id || Math.floor(Math.random()*1E3);
     
     //file types flash video player supports:
     this.flashVideoTypes = /\.flv$|\.f4v$|\.mov$|\.mp4$/i;
@@ -51,6 +61,14 @@ var wpAd = window.wpAd || {};
     
     this.playerType = this.getPlayerType();
     this.player = this.getplayer();
+    
+    if(this.playerType === 'html5' && this.settings.pixels && this.bindTrackingPixels){
+      this.bindTrackingPixels();
+    }
+
+    _this = this;
+    
+    console.profileEnd('t');
     
     return this;
   }
@@ -124,7 +142,7 @@ var wpAd = window.wpAd || {};
     var v = d.createElement('video'),
       s = this.settings;
 
-    v.id = 'video' + this.rndm;
+    v.id = 'video' + this.id;
     v.src = this.html5Video;
     v.width = s.width;
     if(s.html5PlayerSettings.setHeight){
@@ -141,13 +159,21 @@ var wpAd = window.wpAd || {};
     }
     v.style.backgroundColor = s.backgroundColor;
     v.style.outline = 'none';
+    
+    
+    //working on html5 video tracking:
+    if(wpAd.addVideoPixel && s.pixels){
+    }
+
     return v;
   };
 
   Video.prototype.buildFlashvars = function(){
     var s = this.settings,
       options = {
+        callback: 'swfVideoCallback' + this.id,
         standAlone: true,
+        clickTag: s.clickTag,
         source: this.flashVideo,
         mute: s.mute,
         autoplay: s.autoplay,
@@ -158,18 +184,41 @@ var wpAd = window.wpAd || {};
       key;
 
     for(key in options){
-      if(options.hasOwnProperty(key)){
+      if(options.hasOwnProperty(key) && options[key] !== ''){
         flashvars += (flashvars ? '&' : '') + key + '=' + String(options[key]);
       }
     }
     
+    if(options.callback){
+      this.buildFlashCallback(options.callback);
+    }
+    
     return flashvars + (this.settings.customFlashVars ? '&' + this.settings.customFlashVars : '');
+  };
+
+  Video.prototype.buildFlashCallback = function(fn){
+    this.callbackfn = function(){
+      _this.onSWFLoad();
+    };
+    window[fn] = this.callbackfn;
+  };
+  
+  Video.prototype.onSWFLoad = function(){
+    if(this.bindTrackingPixels){
+      this.callbacksTried = 0;
+      if(this.flashplayer().bind){
+        this.bindTrackingPixels();
+      } else if(this.callbacksTried < 10){
+        setTimeout(this.callbackfn, 250);
+        this.callbacksTried++;
+      }
+    }
   };
   
   Video.prototype.constructFlashPlayer = function(){
     var s = this.settings;
     this.playerCodeString = 
-      '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="'+ s.width +'" height="'+ s.height +'" id="videoie' + this.rndm + '" style="outline:none;">' +
+      '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="'+ s.width +'" height="'+ s.height +'" id="videoie' + this.id + '" style="outline:none;">' +
         '<param name="movie" value="' + s.flashVideoPlayer + '" />' +
         '<param name="quality" value="high" />' +
         '<param name="bgcolor" value="'+s.backgroundColor+'" />' +
@@ -179,7 +228,7 @@ var wpAd = window.wpAd || {};
         '<param name="allowScriptAccess" value="always" />' +
         '<param name="flashvars" value="' + this.flashvars + '" />' + 
         '<!--[if !IE]>-->' +
-          '<object type="application/x-shockwave-flash" data="' + s.flashVideoPlayer + '" width="'+ s.width +'" height="'+ s.height +'" id="video' + this.rndm + '" style="outline:none;">' +
+          '<object type="application/x-shockwave-flash" data="' + s.flashVideoPlayer + '" width="'+ s.width +'" height="'+ s.height +'" id="video' + this.id + '" style="outline:none;">' +
             '<param name="movie" value="' + s.flashVideoPlayer + '" />' +
             '<param name="quality" value="high" />' +
             '<param name="bgcolor" value="'+s.backgroundColor+'" />' +
@@ -217,14 +266,14 @@ var wpAd = window.wpAd || {};
     var m=false;
     if($.browser.msie){
       if($.browser.version < 9){
-        m = w['videoie' + this.rndm]; // < IE9
+        m = w['videoie' + this.id]; // < IE9
       } else{
-        m = d['videoie' + this.rndm]; // >= IE9
+        m = d['videoie' + this.id]; // >= IE9
       }
     } else{
-      m = d['video' + this.rndm];
+      m = d['video' + this.id];
     }
-    return m || d['video' + this.rndm];
+    return m || d['video' + this.id];
   };
 
   Video.prototype.appendTo = function(arg){

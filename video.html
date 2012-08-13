@@ -58,20 +58,29 @@
     </ul>
   </div>
 
-  <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video.js"></script>
-  <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video_interaction.js"></script>
+  <!--script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video.js"></script>
+  <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video_interaction.js"></script-->
+  <script type="text/javascript" src="video.js"></script>
+  <script type="text/javascript" src="video_interaction.js"></script>
   
   <script type="text/javascript">
     var vidplayer = new wpAd.Video({
       'preferHTML5': false,
-      'source': ['http://videoads.washingtonpost.com/test.f4v', 
+      'source': [
+        'http://videoads.washingtonpost.com/test.f4v', 
         'http://videoads.washingtonpost.com/attVideo_theRoot.webm',
         'http://videoads.washingtonpost.com/horsepower_15_min.ogg',
         'http://videoads.washingtonpost.com/attVideo_theRoot.mp4'
       ],
       'autoplay': false,
       'mute': false,
-      'poster': 'http://media.washingtonpost.com/wp-adv/advertisers/smartwater/2011/poster.jpg',
+      'pixels': {
+        'play': 'play_pixel_url',
+        'pause': 'pause_pixel_url',
+        'play': 'stop_pixel_url'
+      },
+      'poster': 'http://img.wpdigital.net/wp-adv/advertisers/smartwater/2011/poster.jpg',
+      'flashVideoPlayer': 'VidPlayer.v1.swf',
       'preload': false,
       'width': 700,
       'height': 390
@@ -92,12 +101,7 @@
         vidplayer[this.rel]();
       }).html('&raquo; ' + this.rel)
     });
-    
-    //demo track video plays
-    //important to wait for window.load or any other method to ensure the .swf has loaded
-    $(window).load(function(){
-      vidplayer.bind('play', 'vidplayer.addPixel', 'play_impression_pixel');
-    })
+
   </script>
 
 </body>
