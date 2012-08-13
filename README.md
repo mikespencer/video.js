@@ -388,10 +388,8 @@ Use the appendTo method
           </ul>
         </div>
 
-        <!--script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video.js"></script>
-        <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video_interaction.js"></script-->
-        <script type="text/javascript" src="video.js"></script>
-        <script type="text/javascript" src="video_interaction.js"></script>
+        <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video.js"></script>
+        <script type="text/javascript" src="http://js.washingtonpost.com/wp-srv/ad/video_interaction.js"></script>
         
         <script type="text/javascript">
           var vidplayer = new wpAd.Video({
