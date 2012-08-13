@@ -1,5 +1,4 @@
 /*global ActiveXObject*/
-
 var wpAd = window.wpAd || {};
 
 (function(w, d, $, wpAd){
