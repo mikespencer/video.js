@@ -1,4 +1,5 @@
-﻿/* Extends the wpAd.Video object with javascript interaction capabilities */
+﻿/*jshint browser: true, evil: true, loopfunc: true */
+/* Extends the wpAd.Video object with javascript interaction capabilities */
 (function(w, d, $, wpAd){
 
   'use strict';
