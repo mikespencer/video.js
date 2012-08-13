@@ -108,7 +108,7 @@ Setting this to true will attempt to use HTML5 video over Flash. If the browser 
 ######custom flashvars for Flash video player
 ######Type: String
 ######Default: '' (Empty String)
-Custom additional flashvars to be passed in to the flash player. Multiple flashvars should be seperated by & (eg: 'clicktag=http://www.example.com&controls_alpha=0.5').
+Custom ADDITIONAL flashvars to be passed in to the flash player. Multiple flashvars should be seperated by & (eg: 'controls_alpha=0.5').
 
 ##backgroundColor
 ######background colour of the player
