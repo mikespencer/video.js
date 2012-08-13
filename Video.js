@@ -5,9 +5,7 @@ var wpAd = window.wpAd || {};
 (function(w, d, $, wpAd){
 
   'use strict';
-  
-  console.profile('t');
-  
+    
   var _this;
 
   function Video(atts) {
@@ -67,9 +65,7 @@ var wpAd = window.wpAd || {};
     }
 
     _this = this;
-    
-    console.profileEnd('t');
-    
+
     return this;
   }
   
