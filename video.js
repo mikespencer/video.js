@@ -1,11 +1,13 @@
+/*jshint browser: true*/
 /*global ActiveXObject*/
 var wpAd = window.wpAd || {};
 
 (function(w, d, $, wpAd){
 
   'use strict';
-    
-  var _this;
+
+  //add bind method if browser does not natively support it:
+  if(!Function.prototype.bind)Function.prototype.bind=function(oThis){if(typeof this!=="function")throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");var aArgs=Array.prototype.slice.call(arguments,1),fToBind=this,FNOP=function(){},fBound=function(){return fToBind.apply(this instanceof FNOP&&oThis?this:oThis,aArgs.concat(Array.prototype.slice.call(arguments)));};FNOP.prototype=this.prototype;fBound.prototype=new FNOP();return fBound;};
 
   function Video(atts) {
 
@@ -40,30 +42,27 @@ var wpAd = window.wpAd || {};
     if(typeof this.settings.source === 'string'){
       this.settings.source = [this.settings.source];
     }
-    
+
     if(this.settings.version > 1){
       this.settings.flashVideoPlayer = this.settings.flashVideoPlayer.replace('v1', 'v' + this.settings.version);
     }
 
     this.num_sources = this.settings.source.length;
     this.id = this.settings.id || Math.floor(Math.random()*1E3);
-    
+
     //file types flash video player supports:
     this.flashVideoTypes = /\.flv$|\.f4v$|\.mov$|\.mp4$/i;
-    
+
     this.getCodecSupport();
     this.flashVideo = this.getFlashVideo();
     this.html5Video = this.gethtml5Video();
-    
-    
+
     this.playerType = this.getPlayerType();
     this.player = this.getplayer();
-    
-    if(this.playerType === 'html5' && this.settings.pixels && this.bindTrackingPixels){
-      this.bindTrackingPixels();
-    }
 
-    _this = this;
+    if(this.playerType === 'html5'){
+      this.onPlayerLoad();
+    }
 
     return this;
   }
@@ -155,18 +154,12 @@ var wpAd = window.wpAd || {};
     v.style.backgroundColor = s.backgroundColor;
     v.style.outline = 'none';
     
-    
-    //working on html5 video tracking:
-    if(wpAd.addVideoPixel && s.pixels){
-    }
-
     return v;
   };
 
   Video.prototype.buildFlashvars = function(){
     var s = this.settings,
       options = {
-        callback: 'swfVideoCallback' + this.id,
         standAlone: true,
         clickTag: s.clickTag,
         source: this.flashVideo,
@@ -184,32 +177,25 @@ var wpAd = window.wpAd || {};
       }
     }
     
-    if(options.callback){
-      this.buildFlashCallback(options.callback);
-    }
-    
     return flashvars + (this.settings.customFlashVars ? '&' + this.settings.customFlashVars : '');
   };
 
-  Video.prototype.buildFlashCallback = function(fn){
-    this.callbackfn = function(){
-      _this.onSWFLoad();
-    };
-    window[fn] = this.callbackfn;
-  };
-  
-  Video.prototype.onSWFLoad = function(){
-    if(this.bindTrackingPixels){
-      this.callbacksTried = 0;
-      if(this.flashplayer().bind){
-        this.bindTrackingPixels();
-      } else if(this.callbacksTried < 10){
-        setTimeout(this.callbackfn, 250);
-        this.callbacksTried++;
-      }
+  Video.prototype.listenForSWFLoad = function(){
+    this.callbacksTried = 0;
+    if(this.flashplayer() && this.flashplayer().bind){
+      this.onPlayerLoad();
+    } else if(this.callbacksTried < 10){
+      this.swfLoadTimer = setTimeout(this.listenForSWFLoad.bind(this), 300);
+      this.callbacksTried++;
     }
   };
   
+  Video.prototype.onPlayerLoad = function(){
+    if(this.bindTrackingPixels){
+      this.bindTrackingPixels();
+    }
+  };
+
   Video.prototype.constructFlashPlayer = function(){
     var s = this.settings;
     this.playerCodeString = 
@@ -235,7 +221,9 @@ var wpAd = window.wpAd || {};
           '</object>' +
         '<!--<![endif]-->' +
       '</object>';
-
+      
+    this.swfLoadTimer = setTimeout(this.listenForSWFLoad.bind(this), 500);
+    
     //return as object:
     return $(this.playerCodeString)[0];
   };
@@ -283,5 +271,5 @@ var wpAd = window.wpAd || {};
   };
 
   wpAd.Video = Video;
-  
+
 })(window, document, jQuery, wpAd);

@@ -1,5 +1,4 @@
 ﻿/*jshint browser: true, evil: true, loopfunc: true */
-
 /* Extends the wpAd.Video object with javascript interaction capabilities */
 (function(w, d, $, wpAd){
 
@@ -7,38 +6,40 @@
   
   wpAd.Video.prototype.bindTrackingPixels = function(){
     var p = this.settings.pixels, key;
-    if(this.playerType === 'flash' && !this.disableExtInt){
-      for(key in p){
-        if(p.hasOwnProperty(key) && p[key]){
-          this.bind(key, 'wpAd.addVideoPixel', p[key], key);
-        }
-      }
-    } else if(this.playerType === 'html5'){
-      var events = {
-        'play': 'play',
-        'pause': 'pause',
-        'stop': 'ended',
-        'mute': 'volumechange',
-        'unmute': 'volumechange'
-      };
-
-      if(p.all){
-        for(key in events){
-          if(events.hasOwnProperty(key)){
-            this.player.addEventListener(events[key], function(e){
-              wpAd.addVideoPixel(p.all, e.type);
-            }, false);
+    if(p){
+      if(this.playerType === 'flash' && !this.disableExtInt){
+        for(key in p){
+          if(p.hasOwnProperty(key) && p[key]){
+            this.bind(key, 'wpAd.addVideoPixel', p[key], key);
           }
         }
-      } else {
-        for(key in p){
-          if(p.hasOwnProperty(key) && p[key] && events[key]){
-            if(!p[events[key]]){
-              p[events[key]] = p[key];
+      } else if(this.playerType === 'html5'){
+        var events = {
+          'play': 'play',
+          'pause': 'pause',
+          'stop': 'ended',
+          'mute': 'volumechange',
+          'unmute': 'volumechange'
+        };
+
+        if(p.all){
+          for(key in events){
+            if(events.hasOwnProperty(key)){
+              this.player.addEventListener(events[key], function(e){
+                wpAd.addVideoPixel(p.all, e.type);
+              }, false);
             }
-            this.player.addEventListener(events[key], function(e){
-              wpAd.addVideoPixel(p[e.type], e.type);
-            }, false);
+          }
+        } else {
+          for(key in p){
+            if(p.hasOwnProperty(key) && p[key] && events[key]){
+              if(!p[events[key]]){
+                p[events[key]] = p[key];
+              }
+              this.player.addEventListener(events[key], function(e){
+                wpAd.addVideoPixel(p[e.type], e.type);
+              }, false);
+            }
           }
         }
       }
@@ -135,7 +136,9 @@
       'alt': arguments[1] || 'pixel'
     }).css({
       'border': '0',
-      'display': 'none'
+      'display': 'none',
+      'height': '1px',
+      'width': '1px'
     }).appendTo('body');
   };
   
