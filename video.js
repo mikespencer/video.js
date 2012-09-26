@@ -70,7 +70,7 @@ var wpAd = window.wpAd || {};
   }
   
   Video.prototype.getCodecSupport = function(){
-		var codecs = {
+    var codecs = {
         'webm' : 'video/webm; codecs="vp8, vorbis"',
         'ogg' : 'video/ogg; codecs="theora, vorbis"',
         'mp4' : 'video/mp4; codecs="avc1.42E01E, mp4a.40.2"'
