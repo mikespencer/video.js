@@ -49,6 +49,8 @@ var wpAd = window.wpAd || {};
 
     this.num_sources = this.settings.source.length;
     this.id = this.settings.id || Math.floor(Math.random()*1E3);
+    this.onLoadQueue = [];
+    this.loaded = false;
 
     //file types flash video player supports:
     this.flashVideoTypes = /\.flv$|\.f4v$|\.mov$|\.mp4$/i;
@@ -190,10 +192,22 @@ var wpAd = window.wpAd || {};
     }
   };
   
+  Video.prototype.onload = function(){
+    var l = arguments.length,i;
+    for(i=0;i<l;i++){
+      this.onLoadQueue.push(arguments[i]);
+    }
+  };
+  
   Video.prototype.onPlayerLoad = function(){
     if(this.bindTrackingPixels){
       this.bindTrackingPixels();
     }
+    var l = this.onLoadQueue.length, i;
+    for(i=0;i<l;i++){
+      this.onLoadQueue[i].call(this);
+    }
+    this.loaded = true;
   };
 
   Video.prototype.constructFlashPlayer = function(){

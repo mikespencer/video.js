@@ -282,6 +282,22 @@ EG:
     myVideo.attr({source: 'newSource.flv'});
 
 
+##onload
+######Arguments:
+1. Unlimited number of arguments (as functions) to be executed when the player has loaded and is ready for javascript interaction.
+
+######Description
+Queue up functions to be executed when the player has loaded and is ready for javascript interaction.
+EG:
+
+    :::javascript
+    //play the video as soon as the player has loaded:
+    myVideo.onload(myVideo.play);
+    
+    //log that the player has loaded and then play the video (as soon as the player has loaded):
+    myVideo.onload(function(){ window.console && console.log('myVideo loaded'); }, myVideo.play);
+
+
 ##play
 
     :::javascript
