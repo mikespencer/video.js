@@ -47,84 +47,120 @@
   };
   
   wpAd.Video.prototype.bind = function(a,b,c){
-    if(this.playerType === 'flash' && !this.disableExtInt){
-      c=c||'';
-      this.flashplayer().bind(a,b,c);
+    if(this.loaded){
+      if(this.playerType === 'flash' && !this.disableExtInt){
+        c=c||'';
+        this.flashplayer().bind(a,b,c);
+      }
+    } else{
+      this.onload(function(){ this.bind(a,b,c); });
     }
   };
 
   wpAd.Video.prototype.unbind = function(a){
-    if(this.playerType === 'flash' && !this.disableExtInt){
-      if(a){
-        this.flashplayer().unbind(a);
-      } else {
-        this.flashplayer().unbind();
+    if(this.loaded){
+      if(this.playerType === 'flash' && !this.disableExtInt){
+        if(a){
+          this.flashplayer().unbind(a);
+        } else {
+          this.flashplayer().unbind();
+        }
       }
+    } else{
+      this.onload(function(){ this.unbind(a); });
     }
   };
 
   wpAd.Video.prototype.switchVideo = function(a){
-    this.settings.source = typeof a === 'string' ? [a] : a;
-    if(this.playerType === 'flash' && !this.disableExtInt){
-      this.flashVideo = this.getFlashVideo();
-      this.flashplayer().switchVideo(this.flashVideo);
-    } else if(this.playerType === 'html5'){
-      this.html5Video = this.gethtml5Video();
-      this.player.src = this.html5Video;
-      this.player.play();
+    if(this.loaded){
+      this.settings.source = typeof a === 'string' ? [a] : a;
+      if(this.playerType === 'flash' && !this.disableExtInt){
+        this.flashVideo = this.getFlashVideo();
+        this.flashplayer().switchVideo(this.flashVideo);
+      } else if(this.playerType === 'html5'){
+        this.html5Video = this.gethtml5Video();
+        this.player.src = this.html5Video;
+        this.player.play();
+      }
+    } else{
+      this.onload(function(){ this.switchVideo(a); });
     }
   };
 
   wpAd.Video.prototype.attr = function(a){
-    if(this.playerType === 'flash' && !this.disableExtInt){
-      if(typeof a === 'object'){
-        this.flashplayer().attr(a);
-      } else if(a === 'string'){
-        return this.flashplayer().attr(a);
-      } else{
-        return this.flashplayer().attr();
+    if(this.loaded){
+      if(this.playerType === 'flash' && !this.disableExtInt){
+        if(typeof a === 'object'){
+          this.flashplayer().attr(a);
+        } else if(a === 'string'){
+          return this.flashplayer().attr(a);
+        } else{
+          return this.flashplayer().attr();
+        }
       }
+    } else{
+      this.onload(function(){ this.attr(a); });
     }
   };
 
   wpAd.Video.prototype.play = function(){
-    if(this.playerType === 'flash' && !this.disableExtInt){
-      this.flashplayer().playVideo();
-    } else if(this.playerType === 'html5'){
-      this.player.play();
+    if(this.loaded){
+      if(this.playerType === 'flash' && !this.disableExtInt){
+        this.flashplayer().playVideo();
+      } else if(this.playerType === 'html5'){
+        this.player.play();
+      }
+    } else{
+      this.onload(function(){ this.play(); });
     }
   };
 
   wpAd.Video.prototype.pause = function(){
-    if(this.playerType === 'flash' && !this.disableExtInt){
-      this.flashplayer().pauseVideo();
-    } else if(this.playerType === 'html5'){
-      this.player.pause();
+    if(this.loaded){
+      if(this.playerType === 'flash' && !this.disableExtInt){
+        this.flashplayer().pauseVideo();
+      } else if(this.playerType === 'html5'){
+        this.player.pause();
+      }
+    } else{
+      this.onload(function(){ this.pause(); });
     }
   };
 
   wpAd.Video.prototype.stop = function(){
-    if(this.playerType === 'flash' && !this.disableExtInt){
-      this.flashplayer().stopVideo();
-    } else if(this.playerType === 'html5'){
-      this.pause();
-      this.player.currentTime = 0;
+    if(this.loaded){
+      if(this.playerType === 'flash' && !this.disableExtInt){
+        this.flashplayer().stopVideo();
+      } else if(this.playerType === 'html5'){
+        this.pause();
+        this.player.currentTime = 0;
+      }
+    } else{
+      this.onload(function(){ this.stop(); });
     }
   };
 
   wpAd.Video.prototype.mute = function(){
-    if(this.playerType === 'flash' && !this.disableExtInt){
-      this.flashplayer().muteVideo();
-    } else if(this.playerType === 'html5'){
-      this.player.volume = 0;
+    if(this.loaded){
+      if(this.playerType === 'flash' && !this.disableExtInt){
+        this.flashplayer().muteVideo();
+      } else if(this.playerType === 'html5'){
+        this.player.volume = 0;
+      }
+    } else{
+      this.onload(function(){ this.mute(); });
     }
   };
 
   wpAd.Video.prototype.unmute = function(){
-    if(this.playerType === 'flash' && !this.disableExtInt){
-      this.flashplayer().unmuteVideo();
-    } else if(this.playerType === 'html5'){
-      this.player.volume = 1;
+    if(this.loaded){
+      if(this.playerType === 'flash' && !this.disableExtInt){
+        this.flashplayer().unmuteVideo();
+      } else if(this.playerType === 'html5'){
+        this.player.volume = 1;
+      }
+    } else{
+      this.onload(function(){ this.unmute(); });
     }
   };
   

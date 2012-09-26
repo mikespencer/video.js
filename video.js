@@ -199,15 +199,15 @@ var wpAd = window.wpAd || {};
     }
   };
   
-  Video.prototype.onPlayerLoad = function(){
+  Video.prototype.onPlayerLoad = function(){    
+    this.loaded = true;
     if(this.bindTrackingPixels){
       this.bindTrackingPixels();
     }
-    var l = this.onLoadQueue.length, i;
+    var l = this.onLoadQueue.length, i;    
     for(i=0;i<l;i++){
       this.onLoadQueue[i].call(this);
     }
-    this.loaded = true;
   };
 
   Video.prototype.constructFlashPlayer = function(){
