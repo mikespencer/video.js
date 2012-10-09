@@ -49,92 +49,92 @@ Takes a single argument (Object) with the following possible keys and default va
       }
     }
 
-##Example of creating a new player
+###Example of creating a new player
     :::javascript
     var myPlayer = new wpAd.Video({ /*any options listed above go here*/ });
     
     //add the video player to a div with an id of 'target':
     myPlayer.appendTo('#target');
     
-##source 
+###source 
 ######The source of the video *REQUIRED
 ######Type: Array or String
 ######Default: []
 An array of possible video source URL's, for both Flash and HTML5 videos. A String can be used for a single video source.
 
-##width
+###width
 ######The width of the video
 ######Type: Number
 ######Default: 320
 The width of the video (pixels).
 
-##height
+###height
 ######The height of the video
 ######Type: Number
 ######Default: 240
 The height of the video (pixels).
 
-##clickTag
+###clickTag
 ######Clickthru URL
 ######Type: String
 ######Default: ''
 URL of the page that will open  if a user clicks on the FLASH video player (no HTML5 player support, at this time).
 
-##mute
+###mute
 ######Indicates whether the video should start muted
 ######Type: Boolean
 ######Default: true
 Setting this value to true mutes the video. Setting this value to false unmutes the video.
 
-##autoplay
+###autoplay
 ######Indicates whether the video should autoplay on page load
 ######Type: Boolean
 ######Default: true
 Setting this value to true autoplays the video. Setting this value to false does not autoplays the video.
 
-##poster
+###poster
 ######Indicates whether the video should start muted
 ######Type: String
 ######Default: false
 URL of the poster image for the video. For no poster, use the boolean false or omit (uses default value of false).
 
-##preferHTML5
+###preferHTML5
 ######Attempt to use HTML5 video over Flash
 ######Type: Boolean
 ######Default: false
 Setting this to true will attempt to use HTML5 video over Flash. If the browser supports HTML5 video and is able to play at least one of the sources passed in, then an HTML5 video player will be used. Otherwise, it will default to a Flash player. Setting this to false (default) will always attempt to render a Flash player first and will then fall back on an HTML5 player if the browser doesn't support flash (ie: IOS), but does support HTML5 video and at least one of the video sources that are passed in.
 
-##customFlashVars
+###customFlashVars
 ######custom flashvars for Flash video player
 ######Type: String
 ######Default: '' (Empty String)
 Custom ADDITIONAL flashvars to be passed in to the flash player. Multiple flashvars should be seperated by & (eg: 'controls_alpha=0.5').
 
-##backgroundColor
+###backgroundColor
 ######background colour of the player
 ######Type: String
 ######Default: '#000000'
 Hex value for background colour for the video player (as a String).
 
-##version
+###version
 ######Version of Flash video player
 ######Type: Number
 ######Default: 1
 replaces v1 in default flashVideoPlayer value with specified version. EG: A value of 2 would use video player: http://media.washingtonpost.com/wp-srv/ad/VidPlayer.v2.swf
 
-##flashVideoPlayer
+###flashVideoPlayer
 ######URL of Flash video player
 ######Type: String
 ######Default: 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.v1.swf'
 URL to the Flash video player.
 
-##id
+###id
 ######Number to appended to the ID of the video player
 ######Type: Number
 ######Default: false
 Override the random number assigned to the ID of the video player. Could be useful for applying specific styles or for targetting with JavaScript. Default ID will be 'video[random 3 digit number]' (eg: video538), or for IE it will be 'videoie[random 3 digit number]' (eg: videoie538). If you pass in a value here, the ID will become 'video[the value you pass in]' or 'videoie[the value you pass in]'. Set to false to generate a random number, or simply omit.
 
-##html5PlayerSettings
+###html5PlayerSettings
 ######Specific settings for HTML5 player
 ######Type: Object {key: Boolean}
 ######Default:
@@ -155,7 +155,7 @@ set to true to loop the video. Set to false to not loop the video.
 ######setHeight
 set to true to use the provided height for the player. Set to false to use a dynamic flexible height based on the width of the player and the video's aspect ratio
 
-##pixels
+###pixels
 ######Tracking pixels for tracking video events
 ######Type: Object {key: 'pixel_url'}/Booelan false for no tracking
 ######Default: false (no tracking)
@@ -179,7 +179,7 @@ Uses this pixel for all events: play, pause, stop, mute, unmute, scrub
 
 #JAVASCRIPT METHODS:
 
-##appendTo
+###appendTo
 ######Argument: 
 1. jQuery selector (String), DOM object, or jQuery Object (required) *REQUIRED
 
@@ -191,7 +191,7 @@ EG:
     myVideo.appendTo('#target');
 
     
-##flashplayer()
+###flashplayer()
 ######0 Arguments
     
 ######Description
@@ -202,7 +202,7 @@ EG:
     myVideo.flashplayer();
 
     
-##toString
+###toString
 ######0 Arguments
     
 ######Description
@@ -213,7 +213,7 @@ EG:
     myVideo.toString();
 
     
-##addPixel
+###addPixel
 ######Argument:
 1. URL of tracking pixel (String) *REQUIRED
 
@@ -225,7 +225,7 @@ EG:
     myVideo.addPixel('trackingPixelURL');
 
 
-##bind
+###bind
 ######Arguments:
 1. The event to bind to: play, pause, stop, mute, unmute, scrub, all (String). *REQUIRED
 2. The JavaScript function to call (String). *REQUIRED
@@ -239,7 +239,7 @@ EG:
     myVideo.bind('play', 'console.log', 'play clicked');
 
     
-##unbind
+###unbind
 ######Arguments:
 1. Event. If omitted, all events/js functions are unbound (String) *OPTIONAL
 
@@ -251,7 +251,7 @@ EG:
     myVideo.unbind('play');
     
 
-##switchVideo
+###switchVideo
 ######Arguments:
 1. Video Source (Array of possible sources, or a single source as a String) *REQUIRED
 
@@ -263,7 +263,7 @@ EG:
     myVideo.switchVideo(['somevideo.flv', 'somevideo.webm', 'somevideo.ogg', 'somevideo.mp4']);
 
 
-##attr
+###attr
 ######Arguments:
 1. The attribute of the Flash player to get (String) OR an Object of mapped attributes to set (Object). *OPTIONAL
 
@@ -282,7 +282,7 @@ EG:
     myVideo.attr({source: 'newSource.flv'});
 
 
-##onload
+###onload
 ######Arguments:
 1. Unlimited number of arguments (as functions) to be executed when the player has loaded and is ready for javascript interaction.
 
@@ -298,22 +298,22 @@ EG:
     myVideo.onload(function(){ window.console && console.log('myVideo loaded'); }, myVideo.play);
 
 
-##play
+###play
 
     :::javascript
     myVideo.play();
     
-##pause
+###pause
 
     :::javascript
     myVideo.pause();
     
-##stop
+###stop
 
     :::javascript
     myVideo.stop();
 
-##mute
+###mute
 
     :::javascript
     myVideo.mute();
