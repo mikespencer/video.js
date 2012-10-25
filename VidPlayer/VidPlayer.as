@@ -58,17 +58,16 @@
 			y : 0,
 			useFlashVars : true,
 			standAlone : false,
-			track_play : false,
-			track_pause : false,
-			track_end : false,
 			preload : false,
 			pauseAt : false,
 			clickTag : false,
-			jsTrackFunction : false,
-			trackingPixel : false,
 			letterBox : false,
 			previewSource: null,
-			fullSource: null
+			fullSource: null,
+			track25percent : false,
+			track50percent : false,
+			track75percent : false,
+			track100percent : false
 		};
 		private var isBuffering:Boolean = false;
 		private var isStopped:Boolean = true;
@@ -168,11 +167,6 @@
 			else{
 				trace("A \"source\" property is required for VidPlayer. This can still be passed in via flashVars.");
 			}
-			
-			if(paramObj.callback && ExternalInterface.available){	
-				ExternalInterface.call(paramObj.callback);
-			}
-			
 		}
 		
 		private function init(){		
@@ -642,7 +636,25 @@
 		private function updateDisplay(e){
 			mcProgressFill.width= nsStream.time*trackBG.width/meta.duration;
 			mcProgressBG.width= nsStream.bytesLoaded * trackBG.width / nsStream.bytesTotal;
+			checkVideoPercentage((nsStream.time/meta.duration)*100);
 		}
+		
+		function checkVideoPercentage(p):void{
+			if(data.track25percent && p >= 25 && p < 50){
+				addPixel(data.track25percent);
+				data.track25percent = false;
+			} else if (data.track50percent && p >= 50 && p < 75){
+				addPixel(data.track50percent);
+				data.track50percent = false;
+			} else if (data.track75percent && p >= 75 && p < 100){
+				addPixel(data.track75percent);
+				data.track75percent = false;
+			} else if (data.track100percent && p === 100){
+				addPixel(data.track100percent);
+				data.track100percent = false;
+			}
+		}
+
 		private function netStatusHandler(e){
 			switch (e.info.code) {
 				case "NetStream.Play.StreamNotFound" : 
@@ -656,9 +668,9 @@
 				case "NetStream.Play.Stop" :
 					isBuffering = false;
 					tmrDisplay.removeEventListener(TimerEvent.TIMER, updateDisplay);
+					checkVideoPercentage(100);
 					stopVideoPlayer();
 					try{wrapper.removeChild(message_mc)}catch(e){trace('message_mc is not on the stage, so it could not be removed.')}
-					if(data.track_end && data.track_end != 'false')addTracking('end',data.track_end);
 				break;
 		
 				case "NetStream.Buffer.Full" : 
@@ -699,7 +711,7 @@
 			hide_btnPause();
 		}
 		public function mute(e:Event = null){
-			addPixel(e);
+			
 			if(e){
 				dispatchEvent(muteEvt);
 			}
@@ -709,7 +721,7 @@
 			}
 		}
 		public function unMute(e:Event = null){
-			addPixel(e);
+			
 			if(e){
 				dispatchEvent(unmuteEvt);
 			}
@@ -719,7 +731,6 @@
 			}
 		}
 		public function playClicked(e:Event = null){
-			addPixel(e);
 			if(e){
 				dispatchEvent(playEvt);
 			}
@@ -739,9 +750,6 @@
 				mcProgressBG.addEventListener(MouseEvent.MOUSE_DOWN, start_mov_seek);
 				mcProgressFill.addEventListener(MouseEvent.MOUSE_DOWN, start_mov_seek);
 			}
-			if(data.track_play && data.track_play != 'false' && e!=null){
-				addTracking('play',data.track_play);
-			}
 			wrapper.addEventListener(MouseEvent.MOUSE_OVER, show_controls);
 			wrapper.addEventListener(MouseEvent.MOUSE_OUT, hide_controls);
 			
@@ -754,7 +762,7 @@
 			wrapper.addEventListener(MouseEvent.MOUSE_OUT,hide_btnPause);
 		}		
 		public function pauseClicked(e:Event = null){
-			addPixel(e);
+			
 			if(e){
 				dispatchEvent(pauseEvt);
 			}
@@ -764,9 +772,6 @@
 			wrapper.removeEventListener(MouseEvent.MOUSE_OVER,show_btnPause);
 			wrapper.removeEventListener(MouseEvent.MOUSE_OUT,hide_btnPause);
 			
-			if(data.track_pause && data.track_pause != 'false' && e!=null){
-				addTracking('pause',data.track_pause);
-			}
 			if(!interacted && !!data.pauseAt && data.pauseAt != 'false'){
 				clearpauseAt();
 			}
@@ -815,7 +820,7 @@
 			tmrDisplay.addEventListener(TimerEvent.TIMER, mov_seek);
 		}
 		private function stop_mov_seek(e:MouseEvent):void{
-			addPixel(e);
+			
 			stage.removeEventListener(MouseEvent.MOUSE_UP, stop_mov_seek);
 			stage.removeEventListener(Event.MOUSE_LEAVE, stop_mov_seek);
 			if(!isBuffering)wrapper.addEventListener(MouseEvent.MOUSE_OUT, hide_controls);
@@ -831,17 +836,7 @@
 			nsStream.seek( Math.round((controls_mc.mouseX < mcProgressBG.width ? controls_mc.mouseX : mcProgressBG.width) * meta.duration) / trackBG.width); //the check is to stop you scrubbing past what is buffered
 			//nsStream.seek(Math.round(controls_mc.mouseX * meta.duration) / trackBG.width);
 		}
-		public function addTracking(event:String, func=true){
-			//trace('tracking added for ' + event)
-			if(ExternalInterface.available){
-				if(func == true || func == 'true'){
-					ExternalInterface.call('wpAd.videoplayer.addPixel', event);
-				}
-				else{
-					ExternalInterface.call(func, event);
-				}
-			}
-		}
+
 		private function oldSwitchVideo(video){
 			stopVideoPlayer();
 			data.source = video;
@@ -893,16 +888,11 @@
 			}
 			return data;
 		}
-		public function addPixel(e):void{
-			if(e && data.jsTrackFunction && data.trackingPixel){
-				if(ExternalInterface.available) {
-					ExternalInterface.call(data.jsTrackFunction, data.trackingPixel);
-					//ExternalInterface.call(jsAddPixelFunction(data.trackingPixel));
-				} else {
-					navigateToURL(new URLRequest('javascript:'+data.jsTrackFunction+'("'+data.trackingPixel+'");'), '_self');
-					//navigateToURL(new URLRequest('javascript:'+jsAddPixelFunction(data.trackingPixel), '_self');
-				}
-			}
+
+		public function addPixel(p:*):void{
+			var l = new Loader();
+			p = p is String ? new URLRequest(p) : p;
+			l.load(p);
 		}
 		
 		//4 optional arguments added
