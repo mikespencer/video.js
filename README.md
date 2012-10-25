@@ -28,6 +28,7 @@ Takes a single argument (Object) with the following possible keys and default va
     :::javascript
     {
       'source': [], //REQUIRED
+      'target': '',
       'width': 320,
       'height': 240,
       'clickTag': '',
@@ -61,6 +62,12 @@ Takes a single argument (Object) with the following possible keys and default va
 ######Type: Array or String
 ######Default: []
 An array of possible video source URL's, for both Flash and HTML5 videos. A String can be used for a single video source.
+
+###target
+######The target element to append the video player to
+######Type: String, DOM Element, jQuery Object
+######Default: ''
+The target element to append the video player to. Calls the **appendTo** method, and passes this value in as the argument (if exists).
 
 ###width
 ######The width of the video

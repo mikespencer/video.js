@@ -17,6 +17,7 @@ var wpAd = window.wpAd || {};
 
     //default settings are overwritten by atts:
     this.settings = $.extend({
+      'target' : '',
       'source': [],
       'width': 320,
       'height': 240,
@@ -65,8 +66,7 @@ var wpAd = window.wpAd || {};
     if(this.playerType === 'html5'){
       this.onPlayerLoad();
     }
-
-    return this;
+    return this.settings.target ? this.appendTo(this.settings.target) : this;
   }
   
   Video.prototype.getCodecSupport = function(){
@@ -282,6 +282,7 @@ var wpAd = window.wpAd || {};
       }
       $(this.player).appendTo(arg);
     }
+    return this;
   };
 
   wpAd.Video = Video;
