@@ -155,6 +155,8 @@
 				data.fullSource = data.source;
 				data.source = data.previewSource;
 			}
+			
+			addQuartileTracking();
 
 			if(data.source){
 				if(data.standAlone && data.standAlone != 'false'){
@@ -168,7 +170,7 @@
 				trace("A \"source\" property is required for VidPlayer. This can still be passed in via flashVars.");
 			}
 		}
-		
+
 		private function init(){		
 			this.addChild(wrapper);
 			create_timer();
@@ -639,19 +641,47 @@
 			checkVideoPercentage((nsStream.time/meta.duration)*100);
 		}
 		
+		private function addQuartileTracking():void{
+			if(data.track25percent || data.track50percent || data.track75percent || data.track100percent){
+				data.quartileTracking = [
+					{
+						url: data.track25percent,
+						called: false
+					},
+					{
+						url: data.track50percent,
+						called: false
+					},
+					{
+						url: data.track75percent,
+						called: false
+					},
+					{
+						url: data.track100percent,
+						called: false
+					}
+				];
+			}
+		}
+		
+		private function resetQuartileTracking():void{
+			if(data.quartileTracking){
+				var l = data.quartileTracking.length;
+				while(l--){
+					data.quartileTracking[l].called = false;
+				}
+			}
+		}
+		
 		function checkVideoPercentage(p):void{
-			if(data.track25percent && p >= 25 && p < 50){
-				addPixel(data.track25percent);
-				data.track25percent = false;
-			} else if (data.track50percent && p >= 50 && p < 75){
-				addPixel(data.track50percent);
-				data.track50percent = false;
-			} else if (data.track75percent && p >= 75 && p < 100){
-				addPixel(data.track75percent);
-				data.track75percent = false;
-			} else if (data.track100percent && p === 100){
-				addPixel(data.track100percent);
-				data.track100percent = false;
+			if(data.quartileTracking){
+				var q = data.quartileTracking, l=q.length, i=0, s=100/l;
+				for(i;i<l;i++){
+					if(!q[i].called && q[i].url && p >= (i+1)*s){
+						addPixel(q[i].url);
+						q[i].called = true;
+					}
+				}
 			}
 		}
 
@@ -669,6 +699,7 @@
 					isBuffering = false;
 					tmrDisplay.removeEventListener(TimerEvent.TIMER, updateDisplay);
 					checkVideoPercentage(100);
+					resetQuartileTracking();
 					stopVideoPlayer();
 					try{wrapper.removeChild(message_mc)}catch(e){trace('message_mc is not on the stage, so it could not be removed.')}
 				break;
