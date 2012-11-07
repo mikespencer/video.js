@@ -80,6 +80,9 @@
       } else if(this.playerType === 'html5'){
         this.html5Video = this.gethtml5Video();
         this.player.src = this.html5Video;
+        if(typeof this.player.load === 'function'){
+          this.player.load();
+        }
         this.player.play();
       }
     } else{
