@@ -33,6 +33,7 @@ var wpAd = window.wpAd || {};
       'flashVideoPlayer': 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.v1.swf',
       'id': false,
       'pixels': false,
+      'wmode': 'window',
       'html5PlayerSettings': {
         'controls': true,
         'loop': false,
@@ -219,7 +220,7 @@ var wpAd = window.wpAd || {};
         '<param name="bgcolor" value="'+s.backgroundColor+'" />' +
         '<param name="scale" value="noscale " />' +
         '<param name="play" value="true" />' +
-        '<param name="wmode" value="window" />' +
+        '<param name="wmode" value="'+ s.wmode +'" />' +
         '<param name="allowScriptAccess" value="always" />' +
         '<param name="flashvars" value="' + this.flashvars + '" />' + 
         '<!--[if !IE]>-->' +
@@ -229,7 +230,7 @@ var wpAd = window.wpAd || {};
             '<param name="bgcolor" value="'+s.backgroundColor+'" />' +
             '<param name="scale" value="noscale " />' +
             '<param name="play" value="true" />' +
-            '<param name="wmode" value="window" />' +
+            '<param name="wmode" value="'+ s.wmode +'" />' +
             '<param name="allowScriptAccess" value="always" />' +
             '<param name="flashvars" value="' + this.flashvars + '" />' +
           '</object>' +

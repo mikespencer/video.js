@@ -43,6 +43,7 @@ Takes a single argument (Object) with the following possible keys and default va
       'flashVideoPlayer': 'http://media.washingtonpost.com/wp-srv/ad/VidPlayer.v1.swf',
       'id': false,
       'pixels': false,
+      'wmode': 'window',
       'html5PlayerSettings' : {
         'controls': true,
         'loop': false,
@@ -140,6 +141,12 @@ URL to the Flash video player.
 ######Type: Number
 ######Default: false
 Override the random number assigned to the ID of the video player. Could be useful for applying specific styles or for targetting with JavaScript. Default ID will be 'video[random 3 digit number]' (eg: video538), or for IE it will be 'videoie[random 3 digit number]' (eg: videoie538). If you pass in a value here, the ID will become 'video[the value you pass in]' or 'videoie[the value you pass in]'. Set to false to generate a random number, or simply omit.
+
+###wmode
+######wmode setting for flash video player
+######Type: String
+######Default: 'window'
+Options are 'window', 'opaque', 'transparent'. Defaults to 'window'.
 
 ###html5PlayerSettings
 ######Specific settings for HTML5 player
@@ -331,6 +338,7 @@ EG:
     myVideo.unmute();
     
 
+
     
     
     
@@ -346,6 +354,11 @@ Use the appendTo method
     } else {
       vidplayer.appendTo('#target');
     }
+
+
+
+
+
 
 
 
@@ -437,12 +450,14 @@ Use the appendTo method
             'height': 390
           });
 
+
           if($.browser.msie){
             //looks like no async loading with ExternalInterface functionality for IE...
             document.write(vidplayer.toString());
           } else {
             vidplayer.appendTo('#target');
           }
+
 
           $('#controls').css({
             'left':vidplayer.settings.width + 20 + 'px'
@@ -458,4 +473,4 @@ Use the appendTo method
       </body>
       </html>    
 
-##Last updated by Mike Spencer 10/25/12
+##Last updated by Mike Spencer 11/08/12
